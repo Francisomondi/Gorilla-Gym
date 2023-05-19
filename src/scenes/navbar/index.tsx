@@ -9,15 +9,17 @@ import ActionButton from "@/shared/ActionButton";
 
 
 type Props = {
+    isTopOfPage:boolean
     selectedPage: SelectedPage
     setSelectedPage:(value: SelectedPage) => void
 }
 
-const Navbar = ({selectedPage,setSelectedPage}: Props) => {
+const Navbar = ({isTopOfPage, selectedPage,setSelectedPage}: Props) => {
 
     const flexBetween='flex items-center justify-between'
     const isAboveMediumScreens= useMediaQuery("(min-width:1020px)")
     const [isMenuToggled, setIsMenuToggled]=useState<boolean>(false)
+    const navbarBackground = isTopOfPage ? " " : "bg-primary-100 drop-shadow"
 
 
 return (
@@ -72,6 +74,43 @@ return (
             </div>
 
         </div>
+
+        {/* Mobile menu model */}
+        {!isAboveMediumScreens && isMenuToggled &&(
+            <div className="fixed right-0 bottom-0 z-40 h-full w-[300px] bg-primary-100  drop-shadow-xl">
+                {/* close Icon*/}
+                <div className="flex justify-end p-12">
+                    <button onClick={()=>setIsMenuToggled(!isMenuToggled)}>
+                        <XMarkIcon className="h-6 w-6 text-gray-400"/>
+                    </button>
+
+                </div>
+                {/** menu items*/}
+                <div className="ml-[33%] flex flex-col gap-10 text-2xl">
+                        <Link 
+                        page="Home"
+                        selectedPage={selectedPage}
+                        setSelectedPage={setSelectedPage}
+                        />
+                        <Link 
+                        page="Benefits"
+                        selectedPage={selectedPage}
+                        setSelectedPage={setSelectedPage}
+                        />
+                        <Link
+                        page="Our classes"
+                        selectedPage={selectedPage}
+                        setSelectedPage={setSelectedPage}
+                        />
+                        <Link 
+                        page="Contacts"
+                        selectedPage={selectedPage}
+                        setSelectedPage={setSelectedPage}
+                        />
+                    </div>
+
+            </div>
+        )}
     </nav>
 )
 }

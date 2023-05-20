@@ -3,6 +3,7 @@ import './App.css'
 import Navbar from "@/scenes/navbar";
 import { useEffect, useState } from "react";
 import { SelectedPage } from '@/shared/Types';
+import Home from './scenes/home/Index';
 
 
 function App() {
@@ -16,16 +17,22 @@ function App() {
 
         setSelectedPage(SelectedPage.Home)
       } 
+      if(window.scrollY !==0) setisTopOfPage(false)
+      
     }
+    window.addEventListener("scroll",handleScroll)
+    return()=> window.removeEventListener("scroll", handleScroll)
    
-  })
+  },[])
 
 
   return (
     <div className='app bg-gray-50'>
       <Navbar
+      isTopOfPage={isTopOfPage}
         selectedPage={selectedPage}
         setSelectedPage={setSelectedPage}/>
+        <Home/>
     </div>
   )
 }
